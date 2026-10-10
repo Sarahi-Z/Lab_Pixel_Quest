@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class GeoController : MonoBehaviour
 {
@@ -9,8 +10,17 @@ public class GeoController : MonoBehaviour
     string Var2 = "Hello ";
     int var3 = 3;
     private Rigidbody2D rb;
+    public int speed = 7;
+    public string nextLevel = "Level2";
+    public Color color1 = Color.red;
+    public Color color2 = Color.green;
+    public Color color3 = Color.blue;
+    private Renderer playerRenderer;
     void Start()
     {
+        playerRenderer = GetComponent<Renderer>();
+        //Defualt Color
+        playerRenderer.material.color = color1;
         rb = GetComponent<Rigidbody2D>();
         //Debug.Log(Var2 + "World");
         //Var2 = "Goodbye ";
@@ -19,15 +29,44 @@ public class GeoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input. GetKeyDown(KeyCode.A))
-        { 
-        rb.velocity = new Vector2(-1, rb.velocity.y);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
+        switch (Input.inputString)
         {
-            rb.velocity = new Vector2(1, rb.velocity.y);
+            case "1":
+                playerRenderer.material.color = color1;
+                break;
+            case "2":
+                playerRenderer.material.color = color2;
+                break;
+            case "3":
+                playerRenderer.material.color = color3;
+                break;
         }
-    } }
+        void SwitchColor(Color newColor)
+        {
+            playerRenderer.material.color = newColor;
+        }
+        float xInput = Input.GetAxis("Horizontal");
+       rb.velocity = new Vector2(xInput * speed, rb.velocity.y);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.tag)
+        {
+            case "Death":
+            {
+                string thisLevel = SceneManager.GetActiveScene().name;
+                    SceneManager.LoadScene (thisLevel);
+                    break;
+            }
+                case "Finish":
+            {
+                SceneManager.LoadScene (nextLevel);
+                break;
+                }
+        }
+     Debug.Log ("Hit");
+    }
+} 
         //Debug.Log(var3);
         //var3++;
 /*
