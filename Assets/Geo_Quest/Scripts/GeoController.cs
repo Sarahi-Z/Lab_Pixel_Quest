@@ -7,10 +7,13 @@ using UnityEngine.SceneManagement;
 public class GeoController : MonoBehaviour
 {
     // Start is called before the first frame update
-    string Var2 = "Hello ";
+
     int var3 = 3;
     private Rigidbody2D rb;
+    private bool isGrounded = true;
     public int speed = 7;
+    public int jumpForce = 7;
+    public int gravity = 7;
     public string nextLevel = "Level2";
     public Color color1 = Color.red;
     public Color color2 = Color.green;
@@ -22,9 +25,6 @@ public class GeoController : MonoBehaviour
         //Defualt Color
         playerRenderer.material.color = color1;
         rb = GetComponent<Rigidbody2D>();
-        //Debug.Log(Var2 + "World");
-        //Var2 = "Goodbye ";
-        //Debug.Log(Var2 + "World");
     }
     // Update is called once per frame
     void Update()
@@ -45,8 +45,35 @@ public class GeoController : MonoBehaviour
         {
             playerRenderer.material.color = newColor;
         }
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            isGrounded = false;
+        }
         float xInput = Input.GetAxis("Horizontal");
-       rb.velocity = new Vector2(xInput * speed, rb.velocity.y);
+        float yInput = Input.GetAxis("Vertical");
+        rb.velocity = new Vector2(xInput * speed, rb.velocity.y);
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -66,24 +93,4 @@ public class GeoController : MonoBehaviour
         }
      Debug.Log ("Hit");
     }
-} 
-        //Debug.Log(var3);
-        //var3++;
-/*
-if (Input.GetKeyDown(KeyCode.W))
-{
-    transform.position += new Vector3(0, 1, 0);
 }
-if (Input.GetKeyDown(KeyCode.S))
-{
-    transform.position += new Vector3(0, -1, 0);
-}
-if (Input.GetKeyDown(KeyCode.D))
-{
-    transform.position += new Vector3(1, 0, 0);
-}
-if (Input.GetKeyDown(KeyCode.A))
-{
-    transform.position += new Vector3(-1, 0, 0);
-}
-*/
