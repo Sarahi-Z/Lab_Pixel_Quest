@@ -3353,6 +3353,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Next Level
       objectReference: {fileID: 0}
+    - target: {fileID: 750650054965346965, guid: cd9c0726a98543e47af23cc9f81d4d52, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1378689753545061569, guid: cd9c0726a98543e47af23cc9f81d4d52, type: 3}
       propertyPath: m_Size.x
       value: 0.7120476
