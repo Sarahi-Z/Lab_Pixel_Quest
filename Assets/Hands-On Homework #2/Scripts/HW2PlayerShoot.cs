@@ -3,6 +3,7 @@ using UnityEngine;
 public class HW2PlayerShoot : MonoBehaviour
 {
 public GameObject preFab;
+public GameObject newBulletPrefab;
 public Transform bulletTrash;
 public Transform bulletSpawn;
 
@@ -34,6 +35,13 @@ private void TimerMethod()
         if (Input.GetKeyDown(KeyCode.Mouse0) && _canShoot)
         {
             GameObject bullet = Instantiate(preFab, bulletSpawn.position, Quaternion.identity);
+            bullet.transform.SetParent(bulletTrash);
+
+            _canShoot = false;
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse1) && _canShoot)
+        {
+            GameObject bullet = Instantiate(newBulletPrefab, bulletSpawn.position, Quaternion.identity);
             bullet.transform.SetParent(bulletTrash);
 
             _canShoot = false;

@@ -748,6 +748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preFab: {fileID: 7854287240566403132, guid: 1ea6bd9350d50894899d6d0e9622592e, type: 3}
+  newBulletPrefab: {fileID: 7854287240566403132, guid: 03321c710658c4efc80a485b3bfd9c64, type: 3}
   bulletTrash: {fileID: 1629114352}
   bulletSpawn: {fileID: 1442179157}
 --- !u!1 &396652744
