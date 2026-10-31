@@ -19,28 +19,30 @@ public class GeoController : MonoBehaviour
     public Color color2 = Color.green;
     public Color color3 = Color.blue;
     private Renderer playerRenderer;
+    private SpriteRenderer _spriteRenderer;
     void Start()
     {
-        playerRenderer = GetComponent<Renderer>();
+        _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        //playerRenderer = GetComponent<Renderer>();
         //Defualt Color
-        playerRenderer.material.color = color1;
+        //playerRenderer.material.color = color1;
         rb = GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
     void Update()
     {
-        switch (Input.inputString)
-        {
-            case "1":
-                playerRenderer.material.color = color1;
-                break;
-            case "2":
-                playerRenderer.material.color = color2;
-                break;
-            case "3":
-                playerRenderer.material.color = color3;
-                break;
-        }
+            switch (Input.inputString)
+            {
+                case "1":
+                    playerRenderer.material.color = color1;
+                    break;
+                case "2":
+                    playerRenderer.material.color = color2;
+                    break;
+                case "3":
+                    playerRenderer.material.color = color3;
+                    break;
+            }
         void SwitchColor(Color newColor)
         {
             playerRenderer.material.color = newColor;
@@ -53,6 +55,9 @@ public class GeoController : MonoBehaviour
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
         rb.velocity = new Vector2(xInput * speed, rb.velocity.y);
+
+        if (xInput > 0) { _spriteRenderer.flipX = true; }
+        else if (xInput < 0) { _spriteRenderer.flipX = false; }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
